@@ -1,0 +1,11 @@
+@base = http://localhost:8000/api
+@cookie = better-auth.session_token=YOUR_SESSION_TOKEN
+
+### Get dashboard summary
+# Returns:
+# - income: totalMonthly, activeCount
+# - expenses: totalThisMonth, count
+# - investments: grouped by subtype with totalInvested + count (active only)
+# - loans: grouped by type (lent/borrowed) with totalOutstanding + count (unsettled only)
+GET {{base}}/dashboard
+Cookie: {{cookie}}

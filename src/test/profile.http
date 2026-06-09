@@ -1,0 +1,29 @@
+@base = http://localhost:8000/api
+@cookie = better-auth.session_token=YOUR_SESSION_TOKEN
+
+### Get profile (auto-creates if not exists)
+GET {{base}}/profile
+Cookie: {{cookie}}
+
+###
+
+### Update profile — set primary currency
+PUT {{base}}/profile
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "currency": "INR"
+}
+
+###
+
+### Update profile — add tracked currencies
+PUT {{base}}/profile
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "currency": "INR",
+  "otherCurrencies": ["USD", "EUR"]
+}

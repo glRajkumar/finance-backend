@@ -1,0 +1,99 @@
+@base = http://localhost:8000/api
+@cookie = better-auth.session_token=YOUR_SESSION_TOKEN
+
+### List all categories
+GET {{base}}/expense-categories
+Cookie: {{cookie}}
+
+###
+
+### Create category
+POST {{base}}/expense-categories
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "name": "Food & Dining",
+  "color": "#FF6B6B",
+  "icon": "🍔"
+}
+
+###
+
+### Update category
+PUT {{base}}/expense-categories/CATEGORY_ID
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "name": "Food & Drinks",
+  "color": "#FF8E53"
+}
+
+###
+
+### Delete category
+DELETE {{base}}/expense-categories/CATEGORY_ID
+Cookie: {{cookie}}
+
+###
+
+### List all expenses
+GET {{base}}/expenses
+Cookie: {{cookie}}
+
+###
+
+### List expenses by category and date range
+GET {{base}}/expenses?categoryId=CATEGORY_ID&from=2025-06-01&to=2025-06-30
+Cookie: {{cookie}}
+
+###
+
+### Create expense
+POST {{base}}/expenses
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "categoryId": "CATEGORY_ID",
+  "amount": 450,
+  "currency": "INR",
+  "date": "2025-06-09",
+  "note": "Lunch at office canteen"
+}
+
+###
+
+### Create recurring expense (monthly rent)
+POST {{base}}/expenses
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "categoryId": "CATEGORY_ID",
+  "amount": 15000,
+  "currency": "INR",
+  "date": "2025-06-01",
+  "note": "Apartment rent",
+  "recurringFrequency": "monthly",
+  "recurringDay": 1
+}
+
+###
+
+### Update expense
+PUT {{base}}/expenses/EXPENSE_ID
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "amount": 500,
+  "note": "Updated note"
+}
+
+###
+
+### Delete expense
+DELETE {{base}}/expenses/EXPENSE_ID
+Cookie: {{cookie}}

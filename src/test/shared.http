@@ -1,0 +1,10 @@
+@base = http://localhost:8000/api
+@cookie = better-auth.session_token=YOUR_SESSION_TOKEN
+
+### View a connection's shared data
+# Returns only the categories the target user has permitted
+# Requires: accepted connection + at least one permission set
+# Response keys present only for permitted categories:
+#   income, expenses, expenseCategories, investments, loans
+GET {{base}}/shared/TARGET_USER_ID
+Cookie: {{cookie}}

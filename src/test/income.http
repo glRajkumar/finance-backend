@@ -1,0 +1,64 @@
+@base = http://localhost:8000/api
+@cookie = better-auth.session_token=YOUR_SESSION_TOKEN
+
+### List all income
+GET {{base}}/income
+Cookie: {{cookie}}
+
+###
+
+### List active salary income
+GET {{base}}/income?type=salary&isActive=true
+Cookie: {{cookie}}
+
+###
+
+### Create salary
+POST {{base}}/income
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "name": "TCS Salary",
+  "type": "salary",
+  "amount": 80000,
+  "currency": "INR",
+  "frequency": "monthly",
+  "isActive": true,
+  "recurringFrequency": "monthly",
+  "recurringDay": 1
+}
+
+###
+
+### Create freelance income
+POST {{base}}/income
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "name": "Upwork Projects",
+  "type": "freelance",
+  "amount": 500,
+  "currency": "USD",
+  "frequency": "monthly",
+  "isActive": true
+}
+
+###
+
+### Update income
+PUT {{base}}/income/INCOME_ID
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "amount": 90000,
+  "isActive": true
+}
+
+###
+
+### Delete income
+DELETE {{base}}/income/INCOME_ID
+Cookie: {{cookie}}

@@ -9,6 +9,17 @@ import { requireAuth } from './middlewares/auth'
 import { auth } from './lib/auth'
 import { env } from './utils/env'
 
+import { authRouter } from './routes/auth'
+import { profileRouter } from './routes/profile'
+import { incomeRouter } from './routes/income'
+import { expenseCategoriesRouter } from './routes/expense-categories'
+import { expensesRouter } from './routes/expenses'
+import { investmentsRouter } from './routes/investments'
+import { loansRouter } from './routes/loans'
+import { connectionsRouter } from './routes/connections'
+import { dashboardRouter } from './routes/dashboard'
+import { sharedRouter } from './routes/shared'
+
 const app = new Hono().basePath("/api")
 
 app.use(logger())
@@ -18,13 +29,20 @@ app.use(compress())
 
 app.get("/health", c => c.json({ status: "ok" }))
 
-app.on(["GET", "POST"], "/auth/*", c => auth.handler(c.req.raw))
+app.route("/auth", authRouter)
 
 app.use(requireAuth)
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+app.route("/profile", profileRouter)
+app.route("/income", incomeRouter)
+app.route("/expense-categories", expenseCategoriesRouter)
+app.route("/expenses", expensesRouter)
+app.route("/investments", investmentsRouter)
+app.route("/loans", loansRouter)
+app.route("/connections", connectionsRouter)
+app.route("/dashboard", dashboardRouter)
+app.route("/shared", sharedRouter)
+
 
 app.notFound(c => c.json({ message: 'Route not found' }, 404))
 

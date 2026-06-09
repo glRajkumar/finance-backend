@@ -1,0 +1,95 @@
+@base = http://localhost:8000/api
+@cookie = better-auth.session_token=YOUR_SESSION_TOKEN
+
+### List all loans
+GET {{base}}/loans
+Cookie: {{cookie}}
+
+###
+
+### List unsettled loans I lent
+GET {{base}}/loans?type=lent&isSettled=false
+Cookie: {{cookie}}
+
+###
+
+### List unsettled borrowed loans
+GET {{base}}/loans?type=borrowed&isSettled=false
+Cookie: {{cookie}}
+
+###
+
+### Create loan (money lent to someone)
+POST {{base}}/loans
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "type": "lent",
+  "personName": "Rahul Kumar",
+  "amount": 10000,
+  "currency": "INR",
+  "interestRate": 0,
+  "interestType": "none",
+  "startDate": "2025-06-01",
+  "dueDate": "2025-09-01",
+  "notes": "For his bike repair"
+}
+
+###
+
+### Create borrowed loan with EMI
+POST {{base}}/loans
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "type": "borrowed",
+  "personName": "Suresh Uncle",
+  "amount": 50000,
+  "currency": "INR",
+  "interestRate": 6,
+  "interestType": "simple",
+  "startDate": "2025-01-01",
+  "dueDate": "2025-12-31",
+  "recurringFrequency": "monthly",
+  "recurringDay": 5,
+  "notes": "Home renovation loan"
+}
+
+###
+
+### Update loan (mark settled)
+PUT {{base}}/loans/LOAN_ID
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "isSettled": true
+}
+
+###
+
+### Delete loan
+DELETE {{base}}/loans/LOAN_ID
+Cookie: {{cookie}}
+
+###
+
+### List repayments for a loan
+GET {{base}}/loans/LOAN_ID/repayments
+Cookie: {{cookie}}
+
+###
+
+### Add repayment
+POST {{base}}/loans/LOAN_ID/repayments
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "amount": 5000,
+  "currency": "INR",
+  "paidAt": "2025-07-05",
+  "notes": "First installment"
+}

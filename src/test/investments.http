@@ -1,0 +1,133 @@
+@base = http://localhost:8000/api
+@cookie = better-auth.session_token=YOUR_SESSION_TOKEN
+
+### List all investments
+GET {{base}}/investments
+Cookie: {{cookie}}
+
+###
+
+### List active SIPs only
+GET {{base}}/investments?subtype=sip&isActive=true
+Cookie: {{cookie}}
+
+###
+
+### List active FDs
+GET {{base}}/investments?subtype=fd&isActive=true
+Cookie: {{cookie}}
+
+###
+
+### Create SIP
+POST {{base}}/investments
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "subtype": "sip",
+  "name": "Mirae Asset Large Cap Fund",
+  "amount": 5000,
+  "currency": "INR",
+  "startDate": "2024-01-01",
+  "isActive": true,
+  "institution": "Groww",
+  "recurringFrequency": "monthly",
+  "recurringDay": 5
+}
+
+###
+
+### Create FD
+POST {{base}}/investments
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "subtype": "fd",
+  "name": "SBI Fixed Deposit",
+  "amount": 100000,
+  "currency": "INR",
+  "startDate": "2025-01-01",
+  "institution": "SBI",
+  "interestRate": 7.5,
+  "interestType": "compound",
+  "compoundFrequency": "quarterly",
+  "maturityDate": "2026-01-01",
+  "maturityAmount": 107500
+}
+
+###
+
+### Create Gold investment
+POST {{base}}/investments
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "subtype": "gold",
+  "name": "Gold Coins",
+  "amount": 55000,
+  "currency": "INR",
+  "startDate": "2024-11-15",
+  "quantity": 10,
+  "unit": "grams",
+  "institution": "MMTC-PAMP"
+}
+
+###
+
+### Create Crypto investment
+POST {{base}}/investments
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "subtype": "crypto",
+  "name": "Bitcoin",
+  "amount": 50000,
+  "currency": "INR",
+  "startDate": "2025-03-01",
+  "quantity": 0.05,
+  "unit": "BTC",
+  "institution": "CoinDCX"
+}
+
+###
+
+### Reinvest — FD matured, money going into new investment (set parentInvestmentId)
+POST {{base}}/investments
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "subtype": "fd",
+  "name": "SBI FD Renewal",
+  "amount": 107500,
+  "currency": "INR",
+  "startDate": "2026-01-01",
+  "institution": "SBI",
+  "interestRate": 7.8,
+  "interestType": "compound",
+  "compoundFrequency": "quarterly",
+  "maturityDate": "2027-01-01",
+  "parentInvestmentId": "PARENT_INVESTMENT_ID"
+}
+
+###
+
+### Update investment (close/deactivate)
+PUT {{base}}/investments/INVESTMENT_ID
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "isActive": false,
+  "maturityAmount": 108250
+}
+
+###
+
+### Delete investment
+DELETE {{base}}/investments/INVESTMENT_ID
+Cookie: {{cookie}}

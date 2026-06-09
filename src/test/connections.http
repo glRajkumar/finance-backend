@@ -1,0 +1,86 @@
+@base = http://localhost:8000/api
+@cookie = better-auth.session_token=YOUR_SESSION_TOKEN
+@cookieB = better-auth.session_token=OTHER_USER_SESSION_TOKEN
+
+### List all my connections
+GET {{base}}/connections
+Cookie: {{cookie}}
+
+###
+
+### List only accepted connections
+GET {{base}}/connections?status=accepted
+Cookie: {{cookie}}
+
+###
+
+### List pending requests
+GET {{base}}/connections?status=pending
+Cookie: {{cookie}}
+
+###
+
+### Send connection request (by email)
+POST {{base}}/connections
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "receiverEmail": "friend@example.com"
+}
+
+###
+
+### Accept connection (called by the receiver)
+PATCH {{base}}/connections/CONNECTION_ID
+Cookie: {{cookieB}}
+Content-Type: application/json
+
+{
+  "status": "accepted"
+}
+
+###
+
+### Reject connection
+PATCH {{base}}/connections/CONNECTION_ID
+Cookie: {{cookieB}}
+Content-Type: application/json
+
+{
+  "status": "rejected"
+}
+
+###
+
+### Get permissions for a connection
+GET {{base}}/connections/CONNECTION_ID/permissions
+Cookie: {{cookie}}
+
+###
+
+### Set permissions (what you allow the other person to see of your data)
+PUT {{base}}/connections/CONNECTION_ID/permissions
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "categories": ["income", "investment"]
+}
+
+###
+
+### Remove all permissions
+PUT {{base}}/connections/CONNECTION_ID/permissions
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{
+  "categories": []
+}
+
+###
+
+### Delete connection
+DELETE {{base}}/connections/CONNECTION_ID
+Cookie: {{cookie}}
